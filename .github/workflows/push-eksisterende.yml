@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ ref }}
+  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ github.ref_name }}
   IMAGE_PREVIOUS: ghcr.io/navikt/familie-bygg-eksperimentering:previous
   IMAGE_LATEST: ghcr.io/navikt/familie-bygg-eksperimentering:latest
 jobs:
