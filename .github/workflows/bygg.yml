@@ -21,8 +21,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Tagg eksisterende image for å kunne rulle raskt tilbake
-        run: docker tag ${IMAGE_LATEST} ${IMAGE_PREVIOUS}
+#      - name: Tagg eksisterende image for å kunne rulle raskt tilbake
+#        run: docker tag ${IMAGE_LATEST} ${IMAGE_PREVIOUS}
       - name: Bygg Docker image
         run: |
           docker build -t ${IMAGE} -t ${IMAGE_LATEST} .
