@@ -30,6 +30,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_sha: ${{ github.sha }}
           custom_tag: ${{ github.sha }}
+          tag_prefix: ''
 #      - name: Tagg eksisterende image for å kunne rulle raskt tilbake
 #        run: docker tag ${IMAGE_LATEST} ${IMAGE_PREVIOUS}
       - name: Bygg Docker image
