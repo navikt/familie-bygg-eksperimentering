@@ -1,0 +1,25 @@
+name: bygg
+on:
+  workflow_dispatch:
+
+env:
+  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ ref }}
+  IMAGE_PREVIOUS: ghcr.io/navikt/familie-bygg-eksperimentering:previous
+  IMAGE_LATEST: ghcr.io/navikt/familie-bygg-eksperimentering:latest
+jobs:
+  deploy-to-prod:
+    name: Bygg
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Pull Docker image med versjonstag
+        run: docker pull ${IMAGE}
