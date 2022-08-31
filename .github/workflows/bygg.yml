@@ -5,8 +5,8 @@ on:
       - 'main'
 env:
   IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ github.sha }}
-  IMAGE_LOCATION: ghcr.io/navikt/familie-bygg-eksperimentering
-  IMAGE_LATEST: ${IMAGE_LOCATION}:latest
+  IMAGE_PREVIOUS: ghcr.io/navikt/familie-bygg-eksperimentering:previous
+  IMAGE_LATEST: ghcr.io/navikt/familie-bygg-eksperimentering:latest
 jobs:
   deploy-to-prod:
     name: Bygg
@@ -22,7 +22,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Tagg eksisterende image for å kunne rulle raskt tilbake
-        run: docker tag ${IMAGE_LATEST} ${IMAGE_LOCATION}:previous
+        run: docker tag ${IMAGE_LATEST} ${IMAGE_PREVIOUS}
       - name: Bygg Docker image
         run: |
           docker build -t ${IMAGE} -t ${IMAGE_LATEST} .
