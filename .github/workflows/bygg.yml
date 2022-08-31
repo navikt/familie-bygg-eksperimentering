@@ -1,0 +1,32 @@
+name: bygg
+on:
+  push:
+    branches:
+      - 'main'
+env:
+  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ github.sha }}
+  IMAGE_LOCATION: ghcr.io/navikt/familie-bygg-eksperimentering
+  IMAGE_LATEST: ${IMAGE_LOCATION}:latest
+jobs:
+  deploy-to-prod:
+    name: Bygg
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tagg eksisterende image for å kunne rulle raskt tilbake
+        run: docker tag ${IMAGE_LATEST} ${IMAGE_LOCATION}:previous
+      - name: Bygg Docker image
+        run: |
+          docker build -t ${IMAGE} -t ${IMAGE_LATEST} .
+      - name: Push Docker image med versjonstag
+        run: docker push ${IMAGE}
+      - name: Push Docker image med 'latest' tag
+        run: docker push ${IMAGE_LATEST}
