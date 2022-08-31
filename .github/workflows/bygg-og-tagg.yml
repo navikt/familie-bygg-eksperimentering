@@ -6,7 +6,6 @@ on:
 
 env:
   IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:v${{ github.sha }}
-  IMAGE_PREVIOUS: ghcr.io/navikt/familie-bygg-eksperimentering:previous
   IMAGE_LATEST: ghcr.io/navikt/familie-bygg-eksperimentering:latest
 jobs:
   deploy-to-prod:
@@ -28,10 +27,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_sha: ${{ github.sha }}
           custom_tag: ${{ github.sha }}
-#      - name: Tagg eksisterende image for å kunne rulle raskt tilbake
-#        run: docker tag ${IMAGE_LATEST} ${IMAGE_PREVIOUS}
       - name: Bygg Docker image
         run: |
           docker build -t ${IMAGE} -t ${IMAGE_LATEST} .
