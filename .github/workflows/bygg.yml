@@ -1,6 +1,8 @@
 name: bygg
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
 
 env:
   IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ github.sha }}
