@@ -5,7 +5,7 @@ on:
       - 'main'
 
 env:
-  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ github.sha }}
+  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:v${{ github.sha }}
   IMAGE_PREVIOUS: ghcr.io/navikt/familie-bygg-eksperimentering:previous
   IMAGE_LATEST: ghcr.io/navikt/familie-bygg-eksperimentering:latest
 jobs:
@@ -30,7 +30,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_sha: ${{ github.sha }}
           custom_tag: ${{ github.sha }}
-          tag_prefix: ''
 #      - name: Tagg eksisterende image for å kunne rulle raskt tilbake
 #        run: docker tag ${IMAGE_LATEST} ${IMAGE_PREVIOUS}
       - name: Bygg Docker image
