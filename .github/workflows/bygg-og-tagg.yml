@@ -28,7 +28,6 @@ jobs:
 #        with:
 #          github_token: ${{ secrets.GITHUB_TOKEN }}
 #          custom_tag: ${{ github.sha }}
-#
       - name: Legg på git-tag
         uses: actions/github-script@v5
         with:
@@ -36,7 +35,7 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/${{ github.sha }}',
+              ref: 'refs/tags/${{ context.sha }}',
               sha: context.sha
             })
       - name: Bygg Docker image
