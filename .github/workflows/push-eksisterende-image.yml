@@ -1,16 +1,21 @@
 name: bygg
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag for imaget som skal ut. Kun tag, ikkje fullt namn'
+        required: true
+        type: string
 
 env:
-  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ github.ref_name }}
+  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering
 jobs:
   deploy-to-prod:
     name: Bygg
     runs-on: ubuntu-latest
     steps:
       - name: Pull Docker image med versjonstag
-        run: docker pull ${IMAGE}
+        run: docker pull ${IMAGE}:${{ inputs.tag }}
 #      - name: Deploy til prod-gcp
 #        uses: nais/deploy/actions/deploy@v1
 #        env:
