@@ -35,7 +35,7 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/${{ context.sha }}',
+              ref: 'refs/tags/${{ github.event.repository.updated_at}}',
               sha: context.sha
             })
       - name: Bygg Docker image
