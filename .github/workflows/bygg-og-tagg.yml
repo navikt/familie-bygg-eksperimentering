@@ -5,7 +5,6 @@ on:
       - 'main'
 
 env:
-  IMAGE_ID: ghcr.io/navikt/familie-bygg-eksperimentering:${{ github.run_id }}
   IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:v${{ github.sha }}
   IMAGE_LATEST: ghcr.io/navikt/familie-bygg-eksperimentering:latest
 jobs:
@@ -22,22 +21,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Legg på git-tag
-        uses: actions/github-script@v5
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/${{ github.run_id}}',
-              sha: context.sha
-            })
       - name: Bygg Docker image
         run: |
-          docker build -t ${IMAGE} -t ${IMAGE_LATEST} -t ${IMAGE_ID} .
+          docker build -t ${IMAGE} -t ${IMAGE_LATEST} .
       - name: Push Docker image med versjonstag
         run: docker push ${IMAGE}
       - name: Push Docker image med 'latest' tag
         run: docker push ${IMAGE_LATEST}
-      - name: Push Docker image med id
-        run: docker push ${IMAGE_ID}
