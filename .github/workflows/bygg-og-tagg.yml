@@ -5,7 +5,7 @@ on:
       - 'main'
 
 env:
-  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:v${{ github.sha }}
+  IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ github.sha }}
   IMAGE_LATEST: ghcr.io/navikt/familie-bygg-eksperimentering:latest
 jobs:
   deploy-to-prod:
