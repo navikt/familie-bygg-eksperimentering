@@ -39,3 +39,5 @@ jobs:
         run: docker push ${IMAGE}
       - name: Push Docker image med 'latest' tag
         run: docker push ${IMAGE_LATEST}
+      - name: Push Docker image med id
+        run: docker push ${IMAGE_ID}
