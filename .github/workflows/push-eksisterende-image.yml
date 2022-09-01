@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Docker image med versjonstag
-        run: docker pull ${IMAGE}:${{ inputs.tag }}
+        run: docker pull ${{ env.IMAGE }}:${{ inputs.tag }}
 #      - name: Deploy til prod-gcp
 #        uses: nais/deploy/actions/deploy@v1
 #        env:
