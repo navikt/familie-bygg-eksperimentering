@@ -27,7 +27,7 @@ jobs:
 #        uses: mathieudutour/github-tag-action@v6.0
 #        with:
 #          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          custom_tag: ${{ github.sha }}
+#          custom_tag: ${{ github.sha }}s
       - name: Legg på git-tag
         uses: actions/github-script@v5
         with:
