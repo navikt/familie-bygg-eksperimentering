@@ -30,14 +30,14 @@ jobs:
 #          custom_tag: ${{ github.sha }}
       - uses: actions/github-script@v5
       - name: Legg på git-tag
-          with:
-            script: |
-              github.rest.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: 'refs/tags/${IMAGE}',
-                sha: context.sha
-              })
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${IMAGE}',
+              sha: context.sha
+            })
       - name: Bygg Docker image
         run: |
           docker build -t ${IMAGE} -t ${IMAGE_LATEST} .
