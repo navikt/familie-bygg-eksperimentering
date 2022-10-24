@@ -33,3 +33,10 @@ jobs:
         run: docker push ${IMAGE_LATEST}
       - name: Skriv ut docker-taggen
         run: echo 'Docker-tag er ${{ github.sha }} ' >> $GITHUB_STEP_SUMMARY
+    on-branch:
+      name: Bygg branch
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+          with:
+            fetch-depth: 0
