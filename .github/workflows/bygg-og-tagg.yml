@@ -1,14 +1,17 @@
 name: bygg
 on:
   push:
-    branches:
-      - 'main'
+    branches-ignore:
+      - main
+  pull_request:
+    types: [closed]
 
 env:
   IMAGE: ghcr.io/navikt/familie-bygg-eksperimentering:${{ github.sha }}
   IMAGE_LATEST: ghcr.io/navikt/familie-bygg-eksperimentering:latest
 jobs:
   deploy-to-prod:
+    if: github.base_ref == 'main' && github.event.pull_request.merged == 'true'
     name: Bygg
     runs-on: ubuntu-latest
     steps:
@@ -30,3 +33,10 @@ jobs:
         run: docker push ${IMAGE_LATEST}
       - name: Skriv ut docker-taggen
         run: echo 'Docker-tag er ${{ github.sha }} ' >> $GITHUB_STEP_SUMMARY
+  on-branch:
+    name: Bygg branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
